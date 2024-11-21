@@ -1,0 +1,59 @@
+#include <iostream>
+#include <vector>
+#include <algorithm> // For make heap, push heap, pop heap
+
+using namespace std;
+
+// the use of function to display the heap
+void displayHeap(const vector<int> &heap, const string &type) {
+    cout << type << " Heap: ";
+    for (int val : heap)
+        cout << val << " ";
+    cout << endl;
+}
+
+// Task 1: Insert cat into a max heap
+void insertToMaxHeap(vector<int> &heap, int cuteness) {
+    heap.push_back(cuteness);            // Add new cat to the heap
+    push_heap(heap.begin(), heap.end()); // Reorder as Max  heap
+    cout << "Added Cat with Cuteness Level " << cuteness << " to the Max-Heap.\n";
+    displayHeap(heap, "Max");
+}
+
+// Task 2: Remove the cutest (root) cat from Max-Heap
+void removeCutestFromMaxHeap(vector<int> &heap) {
+    pop_heap(heap.begin(), heap.end()); // to move the root to the end
+    int cutest = heap.back();
+    heap.pop_back(); // to remove the last element (cutest cat)
+    cout << "The Cat with Cuteness Level " << cutest << " was adopted!\n";
+    displayHeap(heap, "Max");
+}
+
+// Task 3: this is where it builds a Min heap from an array (for grooming queue)
+void buildMinHeap(vector<int> &arr) {
+    make_heap(arr.begin(), arr.end(), greater<int>()); // Convert to Min heap
+    cout << "Built a Grooming Queue (Min-Heap):\n";
+    displayHeap(arr, "Min");
+}
+
+int main() {
+    // Task 1: Insert cats into Max heap
+    vector<int> maxHeap; // this uses a vector to represent a Max heap
+    make_heap(maxHeap.begin(), maxHeap.end()); // this the section where it initializes empty heap
+    cout << "=== Adding Cats to Max-Heap ===\n";
+    insertToMaxHeap(maxHeap, 10);
+    insertToMaxHeap(maxHeap, 30);
+    insertToMaxHeap(maxHeap, 20);
+    insertToMaxHeap(maxHeap, 40);
+
+    // Task 2: Remove the cutest cat from Max heap
+    cout << "\n=== Adopting the Cutest Cat ===\n";
+    removeCutestFromMaxHeap(maxHeap);
+
+    // Task 3: lastly, this where it builds a Min heap from an array
+    vector<int> groomingQueue = {25, 15, 35, 10};
+    cout << "\n=== Building Grooming Queue (Min-Heap) ===\n";
+    buildMinHeap(groomingQueue);
+
+    return 0;
+}
